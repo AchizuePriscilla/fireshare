@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "3397643616",
+    "project_id": "fire-share-36d98",
+    "storage_bucket": "fire-share-36d98.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:3397643616:android:96d20613aec7dcf0670205",
+        "android_client_info": {
+          "package_name": "com.priscilla.fireshare"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "3397643616-fs7ikh58fchdj6ddtmgu1fcqrkpu36g5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.priscilla.fireshare",
+            "certificate_hash": "2226d27b41ac893d816224f49a2ce86dcfc8f4c8"
+          }
+        },
+        {
+          "client_id": "3397643616-9obngr831osk9th1jidoege48jtb27vj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAf7WB352HKtKcTtDoCD6wZ2UC_G_JhKnY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "3397643616-9obngr831osk9th1jidoege48jtb27vj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
