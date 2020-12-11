@@ -13,11 +13,26 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  bool isAuth = false;
-
-  login() {
-    googleSignIn.signIn();
+  @override
+  void initState() {
+    super.initState();
+    googleSignIn.onCurrentUserChanged.listen((account) {
+      if (account != null) {
+        print(account);
+        setState(() {
+          isAuth = true;
+        });
+      } else {
+        setState(() {
+          isAuth = false;
+        });
+      }
+    }, onError: (err) {
+      print('error signing in: $err');
+    });
   }
+
+  bool isAuth = false;
 
   Widget buildAuthScreen() {
     return Text('Authorized');
@@ -59,7 +74,7 @@ class _HomeState extends State<Home> {
                               'assets/images/google_signin_button.png'),
                           fit: BoxFit.cover)),
                 ),
-                onTap: login(),
+                onTap: () => login(),
               ),
             ],
           ),
@@ -73,4 +88,8 @@ class _HomeState extends State<Home> {
     SizeConfig().init(context);
     return isAuth ? buildAuthScreen() : buildUnAuthScreen();
   }
+}
+
+void login() {
+  googleSignIn.signIn();
 }
