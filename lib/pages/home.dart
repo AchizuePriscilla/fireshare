@@ -1,8 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:fireshare/config.dart';
-import 'package:fireshare/main.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 final GoogleSignIn googleSignIn = GoogleSignIn();
@@ -60,7 +58,7 @@ class _HomeState extends State<Home> {
               Text(
                 'FireShare',
                 style: GoogleFonts.pacifico(
-                    fontSize: SizeConfig.blockSizeVertical * 10.0,
+                    fontSize: SizeConfig.blockSizeVertical! * 10.0,
                     color: Colors.white,
                     fontWeight: FontWeight.w200),
               ),
@@ -72,7 +70,7 @@ class _HomeState extends State<Home> {
                       image: DecorationImage(
                           image: AssetImage(
                               'assets/images/google_signin_button.png'),
-                          fit: BoxFit.cover)),
+                          fit: BoxFit.fill)),
                 ),
                 onTap: () => login(),
               ),
