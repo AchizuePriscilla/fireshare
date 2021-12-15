@@ -1,3 +1,9 @@
+import 'package:fireshare/pages/activity_feed.dart';
+import 'package:fireshare/pages/profile.dart';
+import 'package:fireshare/pages/search.dart';
+import 'package:fireshare/pages/timeline.dart';
+import 'package:fireshare/pages/upload.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:fireshare/config.dart';
@@ -14,26 +20,93 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     super.initState();
+    pageController = PageController();
     googleSignIn.onCurrentUserChanged.listen((account) {
-      if (account != null) {
-        print(account);
-        setState(() {
-          isAuth = true;
-        });
-      } else {
-        setState(() {
-          isAuth = false;
-        });
-      }
+      handleSignIn(account: account);
     }, onError: (err) {
-      print('error signing in: $err');
+      print('Error signing in: $err');
+    });
+    googleSignIn
+        .signInSilently(suppressErrors: false)
+        .then((account) => handleSignIn(account: account))
+        .catchError((err) {
+      print('Error signing in: $err');
     });
   }
 
+  @override
+  void dispose() {
+    super.dispose();
+    pageController.dispose();
+  }
+
+  handleSignIn({GoogleSignInAccount? account}) {
+    if (account != null) {
+      print(account);
+      setState(() {
+        isAuth = true;
+      });
+    } else {
+      setState(() {
+        isAuth = false;
+      });
+    }
+  }
+
   bool isAuth = false;
+  late PageController pageController;
+  int pageIndex = 0;
+  logout() {
+    googleSignIn.signOut();
+  }
+
+  onPageChanged(int index) {
+    setState(() {
+      pageIndex = index;
+    });
+  }
 
   Widget buildAuthScreen() {
-    return Text('Authorized');
+    return Scaffold(
+      body: PageView(
+        children: [Timeline(), ActivityFeed(), Upload(), Search(), Profile()],
+        controller: pageController,
+        onPageChanged: onPageChanged,
+        physics: NeverScrollableScrollPhysics(),
+      ),
+      bottomNavigationBar: SizedBox(
+        height: 75,
+        child: CupertinoTabBar(
+          border: Border.all(width: 0, color: Colors.black),
+          backgroundColor: Colors.black,
+          items: [
+            BottomNavigationBarItem(
+              icon: Icon(Icons.whatshot),
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.notifications_active),
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(
+                Icons.photo_camera,
+                size: 38,
+              ),
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.search),
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.account_circle),
+            ),
+          ],
+          currentIndex: pageIndex,
+          onTap: (index) {
+            pageController.jumpToPage(index);
+          },
+          activeColor: Theme.of(context).primaryColor,
+        ),
+      ),
+    );
   }
 
   Widget buildUnAuthScreen() {

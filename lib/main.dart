@@ -14,9 +14,11 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'FireShare',
       debugShowCheckedModeBanner: false,
-      theme:
-          ThemeData(primarySwatch: Colors.deepPurple, accentColor: Colors.teal)
-              .copyWith(),
+      theme: ThemeData(
+              primarySwatch: Colors.deepPurple,
+              accentColor: Colors.teal,
+              backgroundColor: Colors.black)
+          .copyWith(),
       home: Home(),
     );
   }
