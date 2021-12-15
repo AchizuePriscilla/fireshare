@@ -101,7 +101,8 @@ class _HomeState extends State<Home> {
           ],
           currentIndex: pageIndex,
           onTap: (index) {
-            pageController.jumpToPage(index);
+            pageController.animateToPage(index,
+                duration: Duration(milliseconds: 300), curve: Curves.easeInOut);
           },
           activeColor: Theme.of(context).primaryColor,
         ),

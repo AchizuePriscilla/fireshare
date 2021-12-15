@@ -1,3 +1,4 @@
+import 'package:fireshare/widgets/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 
 class Timeline extends StatefulWidget {
@@ -10,6 +11,7 @@ class _TimelineState extends State<Timeline> {
   Widget build(context) {
     return Scaffold(
       backgroundColor: Colors.black,
+      appBar: CustomAppBar(),
     );
   }
 }
