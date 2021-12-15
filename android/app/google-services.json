@@ -14,11 +14,11 @@
       },
       "oauth_client": [
         {
-          "client_id": "3397643616-fs7ikh58fchdj6ddtmgu1fcqrkpu36g5.apps.googleusercontent.com",
+          "client_id": "3397643616-p0rl31k53j0620jrhgmugpqg0g9lefb5.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.priscilla.fireshare",
-            "certificate_hash": "2226d27b41ac893d816224f49a2ce86dcfc8f4c8"
+            "certificate_hash": "6780f94a0819aafca699dd2e1e7eef4edae4bb1e"
           }
         },
         {
