@@ -1,7 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:fireshare/models/user.dart';
 import 'package:fireshare/pages/activity_feed.dart';
-import 'package:fireshare/pages/create_account.dart';
 import 'package:fireshare/pages/profile.dart';
 import 'package:fireshare/pages/search.dart';
 import 'package:fireshare/pages/timeline.dart';
@@ -11,13 +8,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:fireshare/config.dart';
-import 'package:google_sign_in/google_sign_in.dart';
-import 'package:provider/src/provider.dart';
-
-// .withConverter(
-//       fromFirestore: (snapshots, _) => User.fromJson(snapshots.data()!),
-//       toFirestore: (user, _) => user.toJson(),
-//     )
+import 'package:provider/provider.dart';
 
 class Home extends StatefulWidget {
   static const String id = 'home-page';

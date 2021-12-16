@@ -5,7 +5,7 @@ import 'package:fireshare/widgets/custom_progress_indicators.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:provider/src/provider.dart';
+import 'package:provider/provider.dart';
 
 class Upload extends StatefulWidget {
   const Upload({Key? key}) : super(key: key);
@@ -20,7 +20,6 @@ class _UploadState extends State<Upload> {
   XFile? file;
 
   Widget buildSplashScreen() {
-    var userVM = context.watch<UserViewodel>();
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: CustomAppBar(),
@@ -61,7 +60,6 @@ class _UploadState extends State<Upload> {
 
   Widget buildUploadForm() {
     var userVM = context.read<UserViewodel>();
-    var rxUserVM = context.watch<UserViewodel>();
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(

@@ -2,7 +2,7 @@ import 'package:fireshare/viewmodels/user_viewmodel.dart';
 import 'package:fireshare/widgets/custom_app_bar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/src/provider.dart';
+import 'package:provider/provider.dart';
 
 class Timeline extends StatefulWidget {
   @override
