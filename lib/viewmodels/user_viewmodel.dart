@@ -26,13 +26,10 @@ class UserViewodel extends BaseViewModel {
   handleSignIn() {
     googleSignIn.onCurrentUserChanged.listen((account) async {
       await signIn(account: account);
-
-      await usersRef.doc(currentGoogleUser.id).get().then((value) {
-        username = value.data()!['username'];
-      });
     }, onError: (err) {
       print('Error signing in: $err');
     });
+
     signInSilently();
   }
 
@@ -67,6 +64,11 @@ class UserViewodel extends BaseViewModel {
     }
     currentUser = localUser.User.fromJson(_docdata);
     currentGoogleUser = googleSignIn.currentUser!;
+    await usersRef.doc(currentGoogleUser.id).get().then((value) {
+      username = value.data()!['username'];
+      notifyListeners();
+      print('Username: $username');
+    });
     notifyListeners();
     print(currentGoogleUser);
     print(currentUser.username);
@@ -136,9 +138,9 @@ class UserViewodel extends BaseViewModel {
     caption = '';
     location = '';
     file = File('');
+    postId = Uuid().v4();
     notifyListeners();
     toggleisUpLoading(false);
-    navigationHandler.goBack();
     print('Success!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
   }
 }

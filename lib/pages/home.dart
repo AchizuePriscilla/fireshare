@@ -49,28 +49,12 @@ class _HomeState extends State<Home> {
   }
 
   Widget buildAuthScreen() {
-    var userVM = context.read<UserViewodel>();
+  
     return Scaffold(
       body: PageView(
         children: [
           Timeline(),
-          Center(
-            child: TextButton(
-              onPressed: () => userVM.logout(),
-              style: ButtonStyle(
-                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12.0),
-                )),
-                fixedSize: MaterialStateProperty.all(Size(140, 50)),
-                backgroundColor: MaterialStateProperty.all(Colors.deepPurple),
-              ),
-              child: Text(
-                'Log Out',
-                style: TextStyle(color: Colors.white, fontSize: 17),
-              ),
-            ),
-          ),
+          ActivityFeed(),
           Upload(),
           Search(),
           Profile()

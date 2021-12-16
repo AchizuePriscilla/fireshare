@@ -71,10 +71,28 @@ class _UploadState extends State<Upload> {
           ),
           actions: [
             InkWell(
-              onTap: () => userVM.handlePostUpload(
-                  xFile: file!,
-                  caption: captionController.text,
-                  location: locationController.text),
+              onTap: () async {
+                await userVM.handlePostUpload(
+                    xFile: file!,
+                    caption: captionController.text,
+                    location: locationController.text);
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    duration: Duration(seconds: 2),
+                    backgroundColor: Theme.of(context).accentColor,
+                    content: SizedBox(
+                      height: 50,
+                      child: Text(
+                        "Post Uploaded\nYou're a fun human!",
+                        style: TextStyle(color: Colors.white, fontSize: 18),
+                      ),
+                    ),
+                  ),
+                );
+                setState(() {
+                  file = null;
+                });
+              },
               child: Center(
                 child: Padding(
                   padding: const EdgeInsets.only(right: 20.0),
