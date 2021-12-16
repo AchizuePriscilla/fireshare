@@ -4,8 +4,10 @@ import 'package:fireshare/widgets/custom_app_bar.dart';
 import 'package:fireshare/widgets/custom_progress_indicators.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
+import 'package:geocoding/geocoding.dart';
 
 class Upload extends StatefulWidget {
   const Upload({Key? key}) : super(key: key);
@@ -223,7 +225,7 @@ class _UploadState extends State<Upload> {
                 Align(
                   alignment: Alignment.center,
                   child: TextButton(
-                    onPressed: () {},
+                    onPressed: getUserLocation,
                     style: ButtonStyle(
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(
@@ -253,9 +255,21 @@ class _UploadState extends State<Upload> {
     );
   }
 
+  getUserLocation() async {
+    Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
+    List<Placemark> placemarks =
+        await placemarkFromCoordinates(position.latitude, position.longitude);
+
+    Placemark placemark = placemarks[0];
+    String formattedAddress = "${placemark.locality}, ${placemark.country}";
+    locationController.text = formattedAddress;
+  }
+
   @override
   void initState() {
     context.read<UserViewodel>().signInSilently();
+    Geolocator.requestPermission();
     super.initState();
   }
 
