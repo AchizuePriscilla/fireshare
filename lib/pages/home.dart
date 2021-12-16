@@ -5,21 +5,19 @@ import 'package:fireshare/pages/create_account.dart';
 import 'package:fireshare/pages/profile.dart';
 import 'package:fireshare/pages/search.dart';
 import 'package:fireshare/pages/timeline.dart';
+import 'package:fireshare/pages/upload.dart';
+import 'package:fireshare/viewmodels/user_viewmodel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:fireshare/config.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:provider/src/provider.dart';
 
-final GoogleSignIn googleSignIn = GoogleSignIn();
-final usersRef = FirebaseFirestore.instance.collection('users')
 // .withConverter(
 //       fromFirestore: (snapshots, _) => User.fromJson(snapshots.data()!),
 //       toFirestore: (user, _) => user.toJson(),
 //     )
-    ;
-final DateTime timeStamp = DateTime.now();
-User? currentUser;
 
 class Home extends StatefulWidget {
   static const String id = 'home-page';
@@ -31,18 +29,8 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     super.initState();
+    context.read<UserViewodel>().handleSignIn();
     pageController = PageController();
-    googleSignIn.onCurrentUserChanged.listen((account) {
-      handleSignIn(account: account);
-    }, onError: (err) {
-      print('Error signing in: $err');
-    });
-    googleSignIn
-        .signInSilently(suppressErrors: false)
-        .then((account) => handleSignIn(account: account))
-        .catchError((err) {
-      print('Error signing in: $err');
-    });
   }
 
   @override
@@ -51,56 +39,8 @@ class _HomeState extends State<Home> {
     pageController.dispose();
   }
 
-  createUserInFireStore() async {
-    final GoogleSignInAccount? user = googleSignIn.currentUser;
-    DocumentSnapshot doc = await usersRef.doc(user!.id).get();
-    Map<String, dynamic> _docdata = Map();
-
-    if (!doc.exists) {
-      final username = await Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) {
-          return CreateAccount();
-        }),
-      );
-      usersRef.doc(user.id).set({
-        'id': user.id,
-        'username': username,
-        'photoUrl': user.photoUrl,
-        'displayName': user.displayName,
-        'email': user.email,
-        'bio': '',
-        'timeStamp': timeStamp
-      });
-      print('User created');
-      doc = await usersRef.doc(user.id).get();
-      _docdata = doc.data() as Map<String, dynamic>;
-    }
-    currentUser = User.fromJson(_docdata);
-    print(currentUser);
-    print(currentUser!.username);
-  }
-
-  handleSignIn({GoogleSignInAccount? account}) {
-    if (account != null) {
-      createUserInFireStore();
-      print(account);
-      setState(() {
-        isAuth = true;
-      });
-    } else {
-      setState(() {
-        isAuth = false;
-      });
-    }
-  }
-
-  bool isAuth = false;
   late PageController pageController;
   int pageIndex = 0;
-  logout() {
-    googleSignIn.signOut();
-  }
 
   onPageChanged(int index) {
     setState(() {
@@ -109,14 +49,14 @@ class _HomeState extends State<Home> {
   }
 
   Widget buildAuthScreen() {
+    var userVM = context.read<UserViewodel>();
     return Scaffold(
       body: PageView(
         children: [
           Timeline(),
-          ActivityFeed(),
           Center(
             child: TextButton(
-              onPressed: () => googleSignIn.signOut(),
+              onPressed: () => userVM.logout(),
               style: ButtonStyle(
                 shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                     RoundedRectangleBorder(
@@ -131,6 +71,7 @@ class _HomeState extends State<Home> {
               ),
             ),
           ),
+          Upload(),
           Search(),
           Profile()
         ],
@@ -175,6 +116,7 @@ class _HomeState extends State<Home> {
   }
 
   Widget buildUnAuthScreen() {
+    var userVM = context.read<UserViewodel>();
     return Scaffold(
       body: SafeArea(
         child: Container(
@@ -210,7 +152,7 @@ class _HomeState extends State<Home> {
                               'assets/images/google_signin_button.png'),
                           fit: BoxFit.fill)),
                 ),
-                onTap: () => login(),
+                onTap: () => userVM.logIn(),
               ),
             ],
           ),
@@ -221,11 +163,8 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+    var userVM = context.watch<UserViewodel>();
     SizeConfig().init(context);
-    return isAuth ? buildAuthScreen() : buildUnAuthScreen();
+    return userVM.isAuth ? buildAuthScreen() : buildUnAuthScreen();
   }
-}
-
-void login() {
-  googleSignIn.signIn();
 }

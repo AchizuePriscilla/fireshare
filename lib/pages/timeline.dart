@@ -1,6 +1,8 @@
+import 'package:fireshare/viewmodels/user_viewmodel.dart';
 import 'package:fireshare/widgets/custom_app_bar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/src/provider.dart';
 
 class Timeline extends StatefulWidget {
   @override
@@ -10,12 +12,13 @@ class Timeline extends StatefulWidget {
 class _TimelineState extends State<Timeline> {
   @override
   Widget build(context) {
+    var userVM = context.watch<UserViewodel>();
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: CustomAppBar(),
       body: Container(
         child: StreamBuilder<QuerySnapshot>(
-            stream: FirebaseFirestore.instance.collection('users').snapshots(),
+            stream: userVM.usersRef.snapshots(),
             builder:
                 (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
               if (!snapshot.hasData) {

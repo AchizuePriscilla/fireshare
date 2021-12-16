@@ -25,6 +25,8 @@ dependencies:
   cached_network_image:
   flutter_svg: ^1.0.0
   google_fonts: 
+  provider: ^6.0.1
+  get_it: ^7.2.0
 
 dev_dependencies:
   flutter_test:

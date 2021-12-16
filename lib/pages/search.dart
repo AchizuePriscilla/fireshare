@@ -1,8 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fireshare/pages/home.dart';
+import 'package:fireshare/viewmodels/user_viewmodel.dart';
 import 'package:fireshare/widgets/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/src/provider.dart';
 
 class Search extends StatefulWidget {
   @override
@@ -111,17 +113,9 @@ class _SearchState extends State<Search> {
         });
   }
 
-  // Future<QuerySnapshot>? searchResultsFuture;
-  // handleSearch(String query) {
-  //   Future<QuerySnapshot> users =
-  //       usersRef.where('displayName', isGreaterThanOrEqualTo: query).get();
-  //   setState(() {
-  //     searchResultsFuture = users;
-  //   });
-  // }
-
   @override
   Widget build(BuildContext context) {
+    var userVM = context.watch<UserViewodel>();
     return Scaffold(
         backgroundColor: Colors.black,
         appBar: CustomAppBar(),
@@ -136,7 +130,7 @@ class _SearchState extends State<Search> {
               child: TextFormField(
                 onChanged: (val) {
                   setState(() {
-                    searchResultsStream = usersRef
+                    searchResultsStream = userVM.usersRef
                         .where('displayName', isGreaterThanOrEqualTo: val)
                         .snapshots();
                   });

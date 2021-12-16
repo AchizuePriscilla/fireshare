@@ -1,9 +1,12 @@
+import 'package:fireshare/handlers/navigation_handler.dart';
 import 'package:fireshare/pages/home.dart';
+import 'package:fireshare/utils/locator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class CreateAccount extends StatefulWidget {
+  static const String id = 'create-account';
   @override
   _CreateAccountState createState() => _CreateAccountState();
 }
@@ -88,7 +91,7 @@ class _CreateAccountState extends State<CreateAccount> {
 
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
-                      duration: Duration(milliseconds: 300),
+                      duration: Duration(milliseconds: 400),
                       backgroundColor: Theme.of(context).accentColor,
                       content: SizedBox(
                         height: 50,
@@ -99,7 +102,7 @@ class _CreateAccountState extends State<CreateAccount> {
                       ),
                     ),
                   );
-                  Navigator.of(context)
+                  locator<NavigationHandler>()
                       .popAndPushNamed(Home.id, result: username);
                 }
               },
