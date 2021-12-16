@@ -1,4 +1,5 @@
 
+import 'package:fireshare/widgets/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 
 class Upload extends StatefulWidget {
@@ -9,6 +10,10 @@ class Upload extends StatefulWidget {
 class _UploadState extends State<Upload> {
   @override
   Widget build(BuildContext context) {
-    return Text("Upload");
+    return Scaffold(
+      backgroundColor: Colors.black,
+      appBar: CustomAppBar(),
+      body: Container(),
+    );
   }
 }

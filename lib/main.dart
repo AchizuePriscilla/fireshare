@@ -20,6 +20,9 @@ class MyApp extends StatelessWidget {
               backgroundColor: Colors.black)
           .copyWith(),
       home: Home(),
+      routes: {
+        Home.id: (context) => Home(),
+      },
     );
   }
 }

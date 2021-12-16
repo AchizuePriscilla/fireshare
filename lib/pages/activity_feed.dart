@@ -1,3 +1,4 @@
+import 'package:fireshare/widgets/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 
 class ActivityFeed extends StatefulWidget {
@@ -8,7 +9,11 @@ class ActivityFeed extends StatefulWidget {
 class _ActivityFeedState extends State<ActivityFeed> {
   @override
   Widget build(BuildContext context) {
-    return Text('Activity Feed');
+   return Scaffold(
+      backgroundColor: Colors.black,
+      appBar: CustomAppBar(),
+      body: Container(),
+    );
   }
 }
 

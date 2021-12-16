@@ -23,7 +23,7 @@ dependencies:
   firebase_messaging: 
   timeago: ^3.1.0
   cached_network_image:
-  flutter_svg:
+  flutter_svg: ^1.0.0
   google_fonts: 
 
 dev_dependencies:
@@ -41,8 +41,4 @@ flutter:
   #     fonts:
   #       - asset: assets/fonts/Signatra.ttf
   assets:
-    - assets/images/google_signin_button.png
-    - assets/images/upload.svg
-    - assets/images/search.svg
-    - assets/images/activity_feed.svg
-    - assets/images/no_content.svg
+    - assets/images/
